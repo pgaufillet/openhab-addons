@@ -1,6 +1,7 @@
 # OpenWebNet Binding
 
 This binding integrates BTicino / Legrand devices using OpenWebNet protocol over Zigbee aka Open/ZigBee and commercially MyHOME(r) Play
+
 The integration happens through a USB dongle, which acts as a gateway to the Open/ZigBee devices.
 
 ![BTI-3578/LEG088328](doc/LEG088328.jpg)

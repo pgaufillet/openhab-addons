@@ -44,4 +44,4 @@ All devices support some of the following channels:
 
 ## Full Example
 
-TODO
+None for now

@@ -15,6 +15,7 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>org.openhab.binding.openwebnet</module>
     <module>org.openhab.binding.airquality</module>
     <module>org.openhab.binding.allplay</module>
     <module>org.openhab.binding.amazondashbutton</module>

@@ -44,4 +44,8 @@ All devices support some of the following channels:
 
 ## Full Example
 
+<<<<<<< HEAD
 None for now
+=======
+TODO
+>>>>>>> refs/remotes/smf666/openwebnet

@@ -15,9 +15,8 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>org.openhab.binding.openwebnet</module>
- <!--    <module>org.openhab.binding.airquality</module>
-    <module>org.openhab.binding.allplay</module>
+    <module>org.openhab.binding.airquality</module>
+	<module>org.openhab.binding.allplay</module>
     <module>org.openhab.binding.amazondashbutton</module>
     <module>org.openhab.binding.atlona</module>
     <module>org.openhab.binding.autelis</module>
@@ -74,6 +73,7 @@
     <module>org.openhab.binding.onewiregpio</module>
     <module>org.openhab.binding.onkyo</module>
     <module>org.openhab.binding.opensprinkler</module>
+    <module>org.openhab.binding.openwebnet</module>
     <module>org.openhab.binding.orvibo</module>
     <module>org.openhab.binding.pentair</module>
     <module>org.openhab.binding.pioneeravr</module>
@@ -107,6 +107,5 @@
     <module>org.openhab.binding.yamahareceiver</module>
     <module>org.openhab.binding.zoneminder</module>
     <module>org.openhab.binding.zway</module>
-     -->
   </modules>
 </project>

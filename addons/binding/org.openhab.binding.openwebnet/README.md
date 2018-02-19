@@ -1,29 +1,7 @@
 # OpenWebNet Binding
 
 This binding integrates BTicino / Legrand devices using OpenWebNet protocol over Zigbee aka Open/ZigBee and commercially MyHOME(r) Play
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-This binding integrates the [Philips Hue Lighting system](http://www.meethue.com).
->>>>>>> bd6e49eb3... 1st commit on openwebnet/zigbee addons
-=======
->>>>>>> 5bc0c6d35... Fix in README.md
-=======
-
->>>>>>> 9dfe1a9b5... Fix README.md
-=======
-This binding integrates the [Philips Hue Lighting system](http://www.meethue.com).
->>>>>>> e782afa70... 1st commit on openwebnet/zigbee addons
-=======
->>>>>>> c542b86f8... Fix in README.md
-=======
-
->>>>>>> b5485a719... Fix README.md
 The integration happens through a USB dongle, which acts as a gateway to the Open/ZigBee devices.
 
 ![BTI-3578/LEG088328](doc/LEG088328.jpg)
@@ -66,8 +44,4 @@ All devices support some of the following channels:
 
 ## Full Example
 
-<<<<<<< HEAD
 None for now
-=======
-TODO
->>>>>>> e782afa70... 1st commit on openwebnet/zigbee addons

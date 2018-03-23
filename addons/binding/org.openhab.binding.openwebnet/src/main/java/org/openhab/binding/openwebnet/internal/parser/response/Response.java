@@ -40,6 +40,7 @@ public abstract class Response {
             add(new AutomationStatusChanged());
             add(new AutomationDetails());
             add(new ProductInformation());
+            add(new LegacyProductInformation());
             add(new FirmwareVersion());
             add(new HardwareVersion());
             add(new NumberOfProductDiscovered());

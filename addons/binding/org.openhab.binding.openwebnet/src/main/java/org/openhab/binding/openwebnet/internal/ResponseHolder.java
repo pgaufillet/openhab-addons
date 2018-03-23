@@ -50,7 +50,7 @@ class ResponseHolder<T> {
      * @throws InterruptedException
      */
     public synchronized @NonNull T get() throws InterruptedException {
-        this.wait();
+        this.wait(20000);
         return response;
     }
 
@@ -64,7 +64,7 @@ class ResponseHolder<T> {
      */
     public synchronized @NonNull T get(T defaultValue) throws InterruptedException {
         if (response.equals(defaultValue)) {
-            this.wait();
+            this.wait(20000);
         }
         return response;
     }

@@ -206,7 +206,8 @@ public class OpenWebNetGateway implements ResponseListener, AutoCloseable {
     public void scanNetwork(@NonNull ScanListener listener) {
         class OneShotScan implements Runnable, ResponseListener {
 
-            private @NonNull ScanListener listener;
+            private static final int MAX_LIGHT_STATUS_RETRIES = 5;
+			private @NonNull ScanListener listener;
             private @NonNull HashMap<Integer, OpenWebNetDevice> devices;
 
             public OneShotScan(@NonNull ScanListener listener) {
@@ -236,20 +237,50 @@ public class OpenWebNetGateway implements ResponseListener, AutoCloseable {
                                 logger.debug("Request to get product information at index {} returns {}", i, reply);
                             }
                         }
+                                                
+						for (Integer macAddress : devices.keySet()) {
+							OpenWebNetDevice device = devices.get(macAddress);
+
+							if (device.getChannels().isEmpty()) {
+								// With legacy product channels' information is still missing.
+								// try to recover it with light status
+								int i = 1;
+								reply = Reply.ACK;
+								while(i < 3 && reply.equals(Reply.ACK)) {
+									int newWhere = macAddress * 100 + i;
+									int leftRetries = MAX_LIGHT_STATUS_RETRIES;
+									reply = Reply.UNDEFINED;
+									while (leftRetries > 0 && !reply.equals(Reply.ACK)) {
+				                        Thread.sleep(1500);
+										logger.debug("Probing legacy device {} channel {} retry {}", macAddress, i, MAX_LIGHT_STATUS_RETRIES + 1 - leftRetries);
+				                        	unlockWhereWorkAround = Integer.valueOf(newWhere);
+										write(GET_LIGHT.replace("<where>", String.valueOf(newWhere)));
+										reply = response.get();
+										leftRetries--;
+									}
+									i++;
+								}
+							}
+						}
+                        
                         // get hardware & firmware version for found devices
-                        for (Integer macAddress : devices.keySet()) {
-                            write(GET_FIRMWARE_VERSION.replace("<where>", macAddress.toString() + "00#9"));
-                            reply = response.get();
-                            if (!Reply.ACK.equals(reply)) {
-                                logger.debug("Request to get firmware version for MAC {} returns {}", macAddress,
-                                        reply);
-                            }
-                            write(GET_HARDWARE_VERSION.replace("<where>", macAddress.toString() + "00#9"));
-                            reply = response.get();
-                            if (!Reply.ACK.equals(reply)) {
-                                logger.debug("Request to get hardware version for MAC {} returns {}", macAddress,
-                                        reply);
-                            }
+						for (OpenWebNetDevice device : devices.values()) {
+							if (device.getChannels().size() > 0) {
+								write(GET_FIRMWARE_VERSION.replace("<where>",
+										device.getMacAddress().toString() + "00#9"));
+								reply = response.get();
+								if (!Reply.ACK.equals(reply)) {
+									logger.debug("Request to get firmware version for MAC {} returns {}",
+											device.getMacAddress(), reply);
+								}
+								write(GET_HARDWARE_VERSION.replace("<where>",
+										device.getMacAddress().toString() + "00#9"));
+								reply = response.get();
+								if (!Reply.ACK.equals(reply)) {
+									logger.debug("Request to get hardware version for MAC {} returns {}",
+											device.getMacAddress(), reply);
+								}
+							}
                         }
                         logger.debug("Scan achieved -> {} device(s) found", devices.size());
 
@@ -293,6 +324,29 @@ public class OpenWebNetGateway implements ResponseListener, AutoCloseable {
                     device.addChannel(port, value);
                 }
 
+            }
+            
+            /* (non-Javadoc)
+             * @see org.openhab.binding.openwebnet.internal.listener.ResponseListener#onLightStatusChange(int, int)
+             */
+            @SuppressWarnings("null")
+            @Override
+			public void onLightStatusChange(int where, int state) {
+                logger.debug("Scan listener onLightStatusChange");
+                int macAddress = where / 100;
+                int port = where % 100;
+                @NonNull
+                OpenWebNetDevice device = devices.get(macAddress);
+                device.addChannel(port, 256); 
+			}
+
+			// from ResponseListener
+            @SuppressWarnings("null")
+            @Override
+            public void onLegacyProductInformation(int where, int index) {
+                logger.debug("Scan listener onLegacyProductInformation");
+                int macAddress = where / 100;
+                devices.putIfAbsent(macAddress, new OpenWebNetDevice(macAddress));
             }
 
             @SuppressWarnings("null")
@@ -503,13 +557,17 @@ public class OpenWebNetGateway implements ResponseListener, AutoCloseable {
         @NonNull
         LightState newState = new LightState(String.format("%02d", where % 100), state);
         if (listener != null) {
-            listener.onStatusChange(newState);
-        } else {
-            logger.warn("Unknown light {} ' out of {}) receives change to {}", where, listeners.size(), newState);
-            listeners.keySet().forEach(key -> {
-                logger.debug("available key = {}", key);
-            });
-        }
+			listener.onStatusChange(newState);
+		} else {
+			if (internalListener != null) {
+				internalListener.onLightStatusChange(where, state);
+			} else {
+				logger.warn("Unknown light {} ' out of {}) receives change to {}", where, listeners.size(), newState);
+				listeners.keySet().forEach(key -> {
+					logger.debug("available key = {}", key);
+				});
+			}
+		}
         if (unlockWhereWorkAround == where) {
             // simulate an Ack
             unlockWhereWorkAround = -1;
@@ -533,6 +591,18 @@ public class OpenWebNetGateway implements ResponseListener, AutoCloseable {
         }
     }
 
+    @Override
+    public void onLegacyProductInformation(int where, int index) {
+        @Nullable
+        ResponseListener internal = internalListener;
+        if (internal != null) {
+            // call the internal Listener
+            internal.onLegacyProductInformation(where, index);
+        } else {
+            logger.debug("{} -> MAC/port {} at index {} without listener", this, where, index);
+        }
+    }
+    
     @Override
     public void onHardwareVersion(int where, String version) {
         @Nullable

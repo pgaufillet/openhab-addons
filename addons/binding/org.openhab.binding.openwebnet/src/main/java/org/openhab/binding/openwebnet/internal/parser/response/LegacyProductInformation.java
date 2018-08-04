@@ -47,6 +47,6 @@ public class LegacyProductInformation extends Response {
             logger.warn("Product information for an index that cannot be parsed ({})", message);
             return;
         }
-        e.onProductInformation(where, index, 256);
+        e.onLegacyProductInformation(where, index);
     }
 }

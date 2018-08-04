@@ -90,6 +90,12 @@ public interface ResponseListener extends EventListener {
     }
 
     /**
+     * Legacy Product information provided
+     */
+    default void onLegacyProductInformation(int where, int index) {
+    }
+
+    /**
      * New thing discovered
      */
     default void onDiscoveredProductsNumber(int number) {

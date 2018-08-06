@@ -26,17 +26,13 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
+				<groupId>${tycho-groupid}</groupId>
 				<artifactId>tycho-surefire-plugin</artifactId>
-				<version>${tycho-version}</version>
 				<configuration>
 					<providerHint>junit47</providerHint>
 					<providerProperties>
-						<excludegroups>org.openhab.binding.feed.test.SlowTests</excludegroups>
+						<excludedGroups>org.openhab.binding.feed.test.SlowTests</excludedGroups>
 					</providerProperties>
-					<excludes>
-						<exclude>**/*.groovy</exclude>
-					</excludes>
 					<defaultStartLevel>
 						<level>4</level>
 						<autoStart>true</autoStart>
@@ -99,7 +95,7 @@
 						<dependency>
 							<type>eclipse-plugin</type>
 							<artifactId>org.eclipse.smarthome.core.thing</artifactId>
-							<version>0.8.0.20160302</version>
+							<version>0.0.0</version>
 						</dependency>
 						<dependency>
 							<type>eclipse-plugin</type>

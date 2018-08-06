@@ -10,9 +10,7 @@ package org.openhab.binding.openwebnet.internal.parser;
 
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
@@ -33,60 +31,13 @@ public class Parser {
 
     private static final String OPENWEBNET_SEPARATOR = "##";
 
+    private StringBuilder buffer;
+
     @SuppressWarnings("null")
     private final Logger logger = LoggerFactory.getLogger(Parser.class);
 
-    private class InnerThread extends Thread {
-
-        private LinkedBlockingQueue<CharBuffer> queue;
-        private StringBuilder buffer;
-
-        InnerThread(LinkedBlockingQueue<CharBuffer> queue) {
-            this.buffer = new StringBuilder();
-            this.queue = queue;
-        }
-
-        @Override
-        public void run() {
-            Thread.currentThread().setName("Parser Thread");
-            logger.debug("{} start", this);
-            boolean loop = true;
-            while (loop) {
-                try {
-                    buffer.append(queue.take());
-                    int position;
-                    while ((position = buffer.indexOf(Parser.OPENWEBNET_SEPARATOR)) >= 0) {
-                        position += Parser.OPENWEBNET_SEPARATOR.length();
-                        @Nullable
-                        String message = buffer.substring(0, position);
-                        if (message != null) {
-                            logger.debug("{} message {} received", this, message);
-                            buffer.delete(0, position);
-                            Response answer = Response.find(message);
-                            if (answer == null) {
-                                logger.warn("\"{}\" received but not understood", message);
-                            } else {
-                                logger.debug("\"{}\" received ", answer.getClass().getSimpleName());
-                                answer.process(message, listener);
-                            }
-                        }
-                    }
-                } catch (InterruptedException e) {
-                    // leave
-                    loop = false;
-                } catch (Exception e2) {
-                    logger.error("{} -> Unexpected error.", this, e2);
-                }
-            }
-            logger.debug("{} finish", this);
-        }
-    }
-
-    private Thread worker;
-
     private @Nullable InputStream currentStream; // only used to check if the InputStream has changed (no read from it)
     private ResponseListener listener;
-    private LinkedBlockingQueue<CharBuffer> queue;
 
     /**
      * Define the packet separator of OpenWebNet protocol
@@ -95,11 +46,9 @@ public class Parser {
      *
      */
     public Parser(ResponseListener listener) {
+        this.buffer = new StringBuilder();
         this.currentStream = null;
         this.listener = listener;
-        this.queue = new LinkedBlockingQueue<>();
-        this.worker = new InnerThread(queue);
-        this.worker.start();
     }
 
     /**
@@ -108,9 +57,29 @@ public class Parser {
      * @param newData buffer to parse
      */
     // Only needed for Maven
-    @SuppressWarnings("null")
+    // @SuppressWarnings("null")
     public void parse(ByteBuffer newData) {
-        queue.add(StandardCharsets.US_ASCII.decode(newData));
+        buffer.append(StandardCharsets.US_ASCII.decode(newData));
+        int position;
+        logger.debug("Input buffer (<{}>, length={})", buffer.toString(), buffer.length());
+        while ((position = buffer.indexOf(Parser.OPENWEBNET_SEPARATOR)) >= 0) {
+            position += Parser.OPENWEBNET_SEPARATOR.length();
+            @Nullable
+            String message = buffer.substring(0, position);
+            if (message != null) {
+                logger.debug("{} message {} received", this, message);
+                buffer.delete(0, position);
+                Response answer = Response.find(message);
+                if (answer == null) {
+                    logger.warn("\"{}\" received but not understood", message);
+                } else {
+                    logger.debug("\"{}\" received ", answer.getClass().getSimpleName());
+                    answer.process(message, listener);
+                }
+            }
+            logger.debug("Input buffer deleted {} -> (<{}>, length={})", position, buffer.toString(), buffer.length());
+        }
+        logger.debug("No more message to parse (<{}>, length={})", buffer.toString(), buffer.length());
     }
 
     /**
@@ -122,11 +91,8 @@ public class Parser {
             currentStream = stream;
         }
         if (!stream.equals(currentStream)) {
-            logger.debug("Stream changed ... Flush and create new inner task");
-            worker.interrupt();
-            this.queue = new LinkedBlockingQueue<>();
-            this.worker = new InnerThread(queue);
-            this.worker.start();
+            logger.info("Stream changed ... Flush {} character(s) <{}>", buffer.length(), buffer.toString());
+            buffer.delete(0, buffer.length());
         }
     }
 

@@ -13,6 +13,7 @@
 package org.openhab.binding.rfxcom.internal.messages;
 
 import org.eclipse.smarthome.config.discovery.DiscoveryResultBuilder;
+import org.eclipse.smarthome.core.types.Command;
 import org.eclipse.smarthome.core.types.State;
 import org.openhab.binding.rfxcom.internal.config.RFXComDeviceConfiguration;
 import org.openhab.binding.rfxcom.internal.exceptions.RFXComException;
@@ -22,9 +23,18 @@ import org.openhab.binding.rfxcom.internal.exceptions.RFXComUnsupportedValueExce
 /**
  * An interface for message about devices, so interface message do not (have to) implement this
  *
- * @author Martin van Wingerden - Simplify some code in the RFXCOM binding
+ * @author Martin van Wingerden - Initial contribution
  */
 public interface RFXComDeviceMessage<T> extends RFXComMessage {
+    /**
+     * Procedure for converting RFXCOM value to openHAB command.
+     *
+     * @param channelId id of the channel
+     * @return openHAB command.
+     * @throws RFXComUnsupportedChannelException if the channel is not supported
+     */
+    Command convertToCommand(String channelId) throws RFXComUnsupportedChannelException;
+
     /**
      * Procedure for converting RFXCOM value to openHAB state.
      *

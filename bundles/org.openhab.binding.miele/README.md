@@ -2,21 +2,21 @@
 
 This binding integrates Miele@home appliances.
 Miele@home is a Zigbee based network to interconnect and control Miele appliances that are equipped with special modules.
-See [www.miele.de](http://www.miele.de) for the list of available appliances.
+See [www.miele.de](https://www.miele.de) for the list of available appliances.
 
 
 ## Supported Things
 
-Coffeemachine
-Dishwasher
-Fridge
-Fridge/Freezer combination
-Hob
-Hood
-Oven
-Microwave/Oven combination
-Tumbledryer
-Washingmachine
+- Coffeemachine
+- Dishwasher
+- Fridge
+- Fridge/Freezer combination
+- Hob
+- Hood
+- Oven
+- Microwave/Oven combination
+- Tumbledryer
+- Washingmachine
 
 ## Discovery
 
@@ -49,7 +49,7 @@ Thing coffeemachine coffeemachine [uid="001d63fffe020505#190"]
 
 ## Channels
 
-The definition of the channels in use can best be checked in the [source repository](https://github.com/openhab/openhab2-addons/tree/master/addons/binding/org.openhab.binding.miele/ESH-INF/thing).
+The definition of the channels in use can best be checked in the [source repository](https://github.com/openhab/openhab2-addons/tree/master/bundles/org.openhab.binding.miele/src/main/resources/ESH-INF/thing).
 
 ## Example
 

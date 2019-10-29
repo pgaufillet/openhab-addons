@@ -79,7 +79,7 @@ public abstract class AbstractMQTTThingHandler extends BaseThingHandler implemen
      * @param channelUID The channelUID
      * @return A channel state. May be null.
      */
-    abstract public @Nullable ChannelState getChannelState(ChannelUID channelUID);
+    public abstract @Nullable ChannelState getChannelState(ChannelUID channelUID);
 
     /**
      * Start the topic discovery and subscribe to all channel state topics on all {@link ChannelState}s.
@@ -88,7 +88,7 @@ public abstract class AbstractMQTTThingHandler extends BaseThingHandler implemen
      * @param connection A started broker connection
      * @return A future that completes normal on success and exceptionally on any errors.
      */
-    abstract protected CompletableFuture<@Nullable Void> start(MqttBrokerConnection connection);
+    protected abstract CompletableFuture<@Nullable Void> start(MqttBrokerConnection connection);
 
     /**
      * Called when the MQTT connection disappeared.
@@ -122,7 +122,7 @@ public abstract class AbstractMQTTThingHandler extends BaseThingHandler implemen
         future.exceptionally(e -> {
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, e.getLocalizedMessage());
             return false;
-        }).thenRun(() -> logger.debug("Successfully published value {} to topic {}", command, data.getStateTopic()));
+        }).thenRun(() -> logger.debug("Successfully published value {} to topic {}", command, data.getCommandTopic()));
     }
 
     @Override
@@ -205,12 +205,22 @@ public abstract class AbstractMQTTThingHandler extends BaseThingHandler implemen
 
     @Override
     public void dispose() {
-        MqttBrokerConnection connection = this.connection;
-        if (connection != null) {
-            connection.unsubscribeAll();
+        stop();
+        try {
+            unsubscribeAll().get(500, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            logger.warn("unsubcription on disposal failed for {}: ", thing.getUID(), e);
         }
+        connection = null;
         super.dispose();
     }
+
+    /**
+     * this method must unsubscribe all topics used by this thing handler
+     *
+     * @return
+     */
+    public abstract CompletableFuture<Void> unsubscribeAll();
 
     @Override
     public void updateChannelState(ChannelUID channelUID, State value) {

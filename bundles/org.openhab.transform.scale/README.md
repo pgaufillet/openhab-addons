@@ -1,6 +1,6 @@
 # Scale Transformation Service
 
-The Scale Transformation Service is a an easy to handle tool that can help you with the discretization of number inputs.
+The Scale Transformation Service is an easy to handle tool that can help you with the discretization of number inputs.
 It transforms a given input by matching it to specified ranges.
 The input string must be in numerical format.
 
@@ -40,7 +40,7 @@ At last, Scale transform can take care of formatting an output with this entry :
 `format=%label% (%value%) !`
 
 Where : 
-- `%label` will be replaced by transformed value and 
+- `%label%` will be replaced by transformed value and 
 - `%value%` is the numeric value presen
 ## Example
 

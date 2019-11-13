@@ -26,7 +26,7 @@ public class ProductInformation extends Response {
 
     @Override
     public boolean check(String message) {
-        return message.matches("\\*#13\\*[0-9]+#9\\*66\\*[0-9]+(\\*[0-9]+)?##");
+        return message.matches("\\*#13\\*[0-9]+#9\\*66\\*[0-9]+\\*[0-9]+##");
     }
 
     @Override

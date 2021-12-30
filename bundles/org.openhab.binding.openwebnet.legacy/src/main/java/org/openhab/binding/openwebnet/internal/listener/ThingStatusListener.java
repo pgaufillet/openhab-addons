@@ -24,5 +24,4 @@ public interface ThingStatusListener extends EventListener {
     void onStatusChange(@NonNull LightState state);
 
     void onStatusChange(@NonNull AutomationState state);
-
 }

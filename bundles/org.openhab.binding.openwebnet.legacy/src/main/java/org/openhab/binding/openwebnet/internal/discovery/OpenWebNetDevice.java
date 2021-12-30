@@ -93,5 +93,4 @@ public class OpenWebNetDevice {
     public boolean hasChannel(int number) {
         return channels.containsKey(number);
     }
-
 }

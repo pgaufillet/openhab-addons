@@ -128,6 +128,5 @@ class SerialGateway extends InternalGateway implements SerialPortEventListener, 
             }
         }
         logger.debug("Reader thread ended.");
-
     }
 }

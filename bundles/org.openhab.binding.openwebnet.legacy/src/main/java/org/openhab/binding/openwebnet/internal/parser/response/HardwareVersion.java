@@ -45,5 +45,4 @@ public class HardwareVersion extends Response {
         String version = segments[4] + "." + segments[5] + "." + segments[6].split("#")[0];
         e.onHardwareVersion(where, version);
     }
-
 }

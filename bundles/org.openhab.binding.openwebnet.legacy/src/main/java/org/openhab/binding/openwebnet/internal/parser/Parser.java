@@ -95,5 +95,4 @@ public class Parser {
             buffer.delete(0, buffer.length());
         }
     }
-
 }

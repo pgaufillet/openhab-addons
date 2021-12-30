@@ -10,7 +10,7 @@ package org.openhab.binding.openwebnet.internal.listener;
 
 import java.util.EventListener;
 
-import org.eclipse.smarthome.core.thing.ThingStatus;
+import org.openhab.core.thing.ThingStatus;
 
 /**
  * The {@link BridgeStatusListener} interface is for classes wishing to register
@@ -22,5 +22,4 @@ import org.eclipse.smarthome.core.thing.ThingStatus;
 public interface BridgeStatusListener extends EventListener {
 
     public void onBridgeStatusChange(ThingStatus status);
-
 }

@@ -45,5 +45,4 @@ public class FirmwareVersion extends Response {
         logger.debug("FirmwareVersion of {} = {}", where, version);
         e.onFirmwareVersion(where, version);
     }
-
 }

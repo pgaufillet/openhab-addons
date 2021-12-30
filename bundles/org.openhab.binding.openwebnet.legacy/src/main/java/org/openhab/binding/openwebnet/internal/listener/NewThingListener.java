@@ -28,5 +28,4 @@ public interface NewThingListener extends EventListener {
      * @param type : type of the thing
      */
     void onThingFound(int where, int index, int type);
-
 }

@@ -98,5 +98,4 @@ abstract class InternalGateway implements AutoCloseable {
             listener.onDisconnect();
         }
     }
-
 }

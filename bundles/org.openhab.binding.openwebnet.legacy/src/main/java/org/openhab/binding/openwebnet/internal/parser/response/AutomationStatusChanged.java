@@ -44,5 +44,4 @@ public class AutomationStatusChanged extends Response {
         logger.debug("Automation @ {} = {}", where, state);
         e.onAutomation(where, state);
     }
-
 }

@@ -28,5 +28,4 @@ public final class MsgAck extends Response {
     public void process(String message, ResponseListener e) {
         e.onAck();
     }
-
 }

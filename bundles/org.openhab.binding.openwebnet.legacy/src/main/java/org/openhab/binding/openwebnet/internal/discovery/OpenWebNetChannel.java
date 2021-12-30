@@ -38,5 +38,4 @@ public class OpenWebNetChannel {
     public String toString() {
         return "id = " + id.toString() + ", type = " + this.type.toString();
     }
-
 }

@@ -12,9 +12,9 @@ import java.util.HashMap;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.smarthome.core.thing.type.ChannelTypeUID;
 import org.openhab.binding.openwebnet.OpenWebNetBindingConstants;
 import org.openhab.binding.openwebnet.internal.exception.InvalidTypeException;
+import org.openhab.core.thing.type.ChannelTypeUID;
 
 /**
  *
@@ -151,5 +151,4 @@ public enum OpenWebNetChannelType {
     public boolean isDimmer() {
         return OpenWebNetBindingConstants.BRIGHTNESS_CHANNEL_TYPE_UID.equals(type);
     }
-
 }

@@ -65,5 +65,4 @@ public final class LightStatusChanged extends Response {
         logger.trace("=> Call StatusChanged on {} to state {}.", where, state);
         e.onLightStatusChange(where, state);
     }
-
 }

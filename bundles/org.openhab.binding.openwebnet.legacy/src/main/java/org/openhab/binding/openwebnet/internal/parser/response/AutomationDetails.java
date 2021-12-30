@@ -47,5 +47,4 @@ public class AutomationDetails extends Response {
         logger.debug("Automation Details @ {} => status={}, level={}", where, status, level);
         e.onAutomationDetails(where, status, level);
     }
-
 }

@@ -17,5 +17,4 @@ package org.openhab.binding.openwebnet.internal.exception;
 public class InvalidTypeException extends Exception {
 
     private static final long serialVersionUID = -7425467936884761859L;
-
 }

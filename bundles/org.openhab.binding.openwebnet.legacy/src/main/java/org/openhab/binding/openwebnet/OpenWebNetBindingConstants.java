@@ -9,8 +9,8 @@
 package org.openhab.binding.openwebnet;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
-import org.eclipse.smarthome.core.thing.ThingTypeUID;
-import org.eclipse.smarthome.core.thing.type.ChannelTypeUID;
+import org.openhab.core.thing.ThingTypeUID;
+import org.openhab.core.thing.type.ChannelTypeUID;
 
 /**
  * The {@link OpenWebNetBindingConstants} class defines common constants, which are
@@ -55,5 +55,4 @@ public class OpenWebNetBindingConstants {
 
     // Module Properties
     public static final String PROPERTY_VERSION = "version";
-
 }

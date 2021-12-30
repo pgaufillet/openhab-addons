@@ -28,7 +28,7 @@ public class OpenWebNetDevice {
     String hardwareVersion;
 
     public OpenWebNetDevice(int macAddress) {
-        this.macAddress = new Integer(macAddress);
+        this.macAddress = Integer.valueOf(macAddress);
         channels = new HashMap<Integer, OpenWebNetChannel>();
         notified = false;
         firmwareVersion = "Unknown";
@@ -74,12 +74,13 @@ public class OpenWebNetDevice {
         return channels;
     }
 
+    @Nullable
     public OpenWebNetChannel getChannel(int number) {
         return this.channels.get(number);
     }
 
     @Override
-    public @Nullable String toString() {
+    public String toString() {
         StringBuilder text = new StringBuilder();
         text.append("Thing [mac = " + this.macAddress + ", HW = " + this.hardwareVersion + ", FW = "
                 + this.firmwareVersion);

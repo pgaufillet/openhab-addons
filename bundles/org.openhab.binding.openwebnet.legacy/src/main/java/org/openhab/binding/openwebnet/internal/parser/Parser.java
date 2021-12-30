@@ -64,18 +64,15 @@ public class Parser {
         logger.debug("Input buffer (<{}>, length={})", buffer.toString(), buffer.length());
         while ((position = buffer.indexOf(Parser.OPENWEBNET_SEPARATOR)) >= 0) {
             position += Parser.OPENWEBNET_SEPARATOR.length();
-            @Nullable
             String message = buffer.substring(0, position);
-            if (message != null) {
-                logger.debug("{} message {} received", this, message);
-                buffer.delete(0, position);
-                Response answer = Response.find(message);
-                if (answer == null) {
-                    logger.warn("\"{}\" received but not understood", message);
-                } else {
-                    logger.debug("\"{}\" received ", answer.getClass().getSimpleName());
-                    answer.process(message, listener);
-                }
+            logger.debug("{} message {} received", this, message);
+            buffer.delete(0, position);
+            Response answer = Response.find(message);
+            if (answer == null) {
+                logger.warn("\"{}\" received but not understood", message);
+            } else {
+                logger.debug("\"{}\" received ", answer.getClass().getSimpleName());
+                answer.process(message, listener);
             }
             logger.debug("Input buffer deleted {} -> (<{}>, length={})", position, buffer.toString(), buffer.length());
         }

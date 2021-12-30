@@ -84,9 +84,7 @@ public class OpenWebNetDeviceDiscoveryService extends AbstractDiscoveryService i
             Map<String, Object> properties = new HashMap<>(5);
 
             String textMacAdress = String.valueOf(macAddress);
-            if (textMacAdress != null) {
-                properties.put(Thing.PROPERTY_MAC_ADDRESS, textMacAdress);
-            }
+            properties.put(Thing.PROPERTY_MAC_ADDRESS, textMacAdress);
             properties.put(Thing.PROPERTY_FIRMWARE_VERSION, firmware);
             properties.put(Thing.PROPERTY_HARDWARE_VERSION, hardware);
 
@@ -96,15 +94,11 @@ public class OpenWebNetDeviceDiscoveryService extends AbstractDiscoveryService i
             OpenWebNetChannelType typeSecondChannel = OpenWebNetChannelType.UNKNOWN;
             String label = "";
             String channelName = String.valueOf(typeFirstChannel.getValue());
-            if (channelName != null) {
-                properties.put(OpenWebNetBindingConstants.CHANNEL1, channelName);
-            }
+            properties.put(OpenWebNetBindingConstants.CHANNEL1, channelName);
             if (isDual) {
                 typeSecondChannel = channels.get(index.next()).getType();
                 channelName = String.valueOf(typeSecondChannel.getValue());
-                if (channelName != null) {
-                    properties.put(OpenWebNetBindingConstants.CHANNEL2, channelName);
-                }
+                properties.put(OpenWebNetBindingConstants.CHANNEL2, channelName);
                 if (typeSecondChannel.equals(typeFirstChannel)) {
                     label = "Dual " + typeFirstChannel.toString();
                 } else {

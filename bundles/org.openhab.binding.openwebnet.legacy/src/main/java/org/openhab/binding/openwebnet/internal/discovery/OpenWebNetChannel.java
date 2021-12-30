@@ -22,7 +22,7 @@ public class OpenWebNetChannel {
     private final OpenWebNetChannelType type;
 
     OpenWebNetChannel(int id, int type) {
-        this.id = new Integer(id);
+        this.id = Integer.valueOf(id);
         this.type = OpenWebNetChannelType.getType(type);
     }
 

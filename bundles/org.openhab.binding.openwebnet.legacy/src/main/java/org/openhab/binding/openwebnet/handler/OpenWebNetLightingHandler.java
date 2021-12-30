@@ -176,8 +176,8 @@ public class OpenWebNetLightingHandler extends OpenWebNetZigBeeThingHandler {
 
         for (int port = 1; port <= getNumberOfPorts(); port++) {
 
-            prop = editProperties()
-                    .get(port == 1 ? OpenWebNetBindingConstants.CHANNEL1 : OpenWebNetBindingConstants.CHANNEL2);
+            prop = editProperties().getOrDefault(
+                    port == 1 ? OpenWebNetBindingConstants.CHANNEL1 : OpenWebNetBindingConstants.CHANNEL2, "");
             try {
                 channelType = Integer.valueOf(prop);
                 boolean isDimmer = OpenWebNetChannelType.getType(channelType).isDimmer();

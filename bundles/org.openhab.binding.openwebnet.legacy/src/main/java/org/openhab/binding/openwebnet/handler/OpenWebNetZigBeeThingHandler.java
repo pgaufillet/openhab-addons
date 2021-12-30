@@ -54,7 +54,7 @@ public abstract class OpenWebNetZigBeeThingHandler extends BaseThingHandler impl
     @Override
     public void initialize() {
         // Get MAC Address
-        String prop = editProperties().get(Thing.PROPERTY_MAC_ADDRESS);
+        String prop = editProperties().getOrDefault(Thing.PROPERTY_MAC_ADDRESS, "");
         try {
             this.macAddress = Integer.valueOf(prop);
         } catch (NumberFormatException e) {

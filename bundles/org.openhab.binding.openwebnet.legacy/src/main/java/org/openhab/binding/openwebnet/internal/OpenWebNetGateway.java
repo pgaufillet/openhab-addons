@@ -316,9 +316,8 @@ public class OpenWebNetGateway implements ResponseListener, AutoCloseable {
                 int macAddress = where / 100;
                 int port = where % 100;
                 devices.putIfAbsent(macAddress, new OpenWebNetDevice(macAddress));
-                @NonNull
                 OpenWebNetDevice device = devices.get(macAddress);
-                if (device.hasChannel(port)) {
+                if (device != null && device.hasChannel(port)) {
                     logger.warn("Channel {} of type {} already exists at MAC {} ", port, value, macAddress);
                 } else {
                     logger.debug("Channel {} at MAC {} of type {}", port, macAddress, value);
@@ -337,9 +336,9 @@ public class OpenWebNetGateway implements ResponseListener, AutoCloseable {
                 logger.debug("Scan listener onLightStatusChange");
                 int macAddress = where / 100;
                 int port = where % 100;
-                @NonNull
                 OpenWebNetDevice device = devices.get(macAddress);
-                device.addChannel(port, 256);
+                if (device != null)
+                    device.addChannel(port, 256);
             }
 
             // from ResponseListener

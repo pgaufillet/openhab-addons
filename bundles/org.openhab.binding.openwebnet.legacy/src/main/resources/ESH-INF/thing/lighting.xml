@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<thing:thing-descriptions bindingId="openwebnet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0" xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+<thing:thing-descriptions bindingId="openwebnet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 	<thing-type id="lighting">
 		<supported-bridge-type-refs>
-			<bridge-type-ref id="dongle" />
+			<bridge-type-ref id="dongle"/>
 		</supported-bridge-type-refs>
 		<label>OpenWebNet Lighting</label>
 		<description>A OpenWebNet ZigBee switch (actuator) for the control of loads/lights.</description>
 		<channels>
-			<channel id="Switch01" typeId="switch" />
-			<channel id="Dimmer01" typeId="brightness" />
+			<channel id="Switch01" typeId="switch"/>
+			<channel id="Dimmer01" typeId="brightness"/>
 		</channels>
 		<properties>
 			<property name="vendor">BTicino/Legrand</property>

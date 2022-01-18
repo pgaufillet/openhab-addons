@@ -6,5 +6,5 @@
 	<name>OpenWebNet Legacy Binding</name>
 	<description>This is the binding for legacy Legrand / Bticino MyHome Play (ZigBee over OpenWebNet).</description>
 	<author>Antoine Laydier and Pierre Gaufillet</author>
-	
+
 </binding:binding>

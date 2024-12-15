@@ -304,7 +304,7 @@ public class OpenWebNetGateway implements ResponseListener, AutoCloseable {
                     listener.onScanError();
                 } finally {
                     internalListener = null;
-                    logger.debug("OneShotSCan finished.");
+                    logger.debug("OneShotScan finished.");
                 }
             }
 

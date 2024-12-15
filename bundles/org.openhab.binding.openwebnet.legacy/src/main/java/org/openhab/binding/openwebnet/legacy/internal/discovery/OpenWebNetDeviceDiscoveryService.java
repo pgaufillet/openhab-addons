@@ -113,16 +113,16 @@ public class OpenWebNetDeviceDiscoveryService extends AbstractDiscoveryService i
             if (typeFirstChannel.isLighting()) {
                 if (isDual) {
                     // dual lighting
-                    ThingUID uid = new ThingUID(OpenWebNetBindingConstants.THING_TYPE_DUAL_LIGHTING,
+                    ThingUID uid = new ThingUID(OpenWebNetBindingConstants.THING_TYPE_DUAL_LIGHTING, bridgeUID,
                             Integer.toString(macAddress));
                     thingDiscovered(DiscoveryResultBuilder.create(uid).withProperties(properties).withBridge(bridgeUID)
-                            .withLabel(label).withRepresentationProperty(String.valueOf(macAddress)).build());
+                            .withLabel(label).withRepresentationProperty(Thing.PROPERTY_MAC_ADDRESS).build());
                 } else {
                     // simple lighting
-                    ThingUID uid = new ThingUID(OpenWebNetBindingConstants.THING_TYPE_LIGHTING,
+                    ThingUID uid = new ThingUID(OpenWebNetBindingConstants.THING_TYPE_LIGHTING, bridgeUID,
                             Integer.toString(macAddress));
                     thingDiscovered(DiscoveryResultBuilder.create(uid).withProperties(properties).withBridge(bridgeUID)
-                            .withLabel(label).withRepresentationProperty(String.valueOf(macAddress)).build());
+                            .withLabel(label).withRepresentationProperty(Thing.PROPERTY_MAC_ADDRESS).build());
                 }
 
             } else if (typeFirstChannel.isAutomation()) {
@@ -130,7 +130,7 @@ public class OpenWebNetDeviceDiscoveryService extends AbstractDiscoveryService i
                 ThingUID uid = new ThingUID(OpenWebNetBindingConstants.THING_TYPE_AUTOMATION,
                         Integer.toString(macAddress));
                 thingDiscovered(DiscoveryResultBuilder.create(uid).withProperties(properties).withBridge(bridgeUID)
-                        .withLabel(label).withRepresentationProperty(String.valueOf(macAddress)).build());
+                        .withLabel(label).withRepresentationProperty(Thing.PROPERTY_MAC_ADDRESS).build());
             } else {
                 logger.warn("Not managed. MAC = {}, FW={}, HW={}, type={} ", macAddress, firmware, hardware,
                         typeFirstChannel);

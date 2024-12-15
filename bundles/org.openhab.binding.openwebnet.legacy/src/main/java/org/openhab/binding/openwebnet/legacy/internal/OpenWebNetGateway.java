@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -208,11 +209,11 @@ public class OpenWebNetGateway implements ResponseListener, AutoCloseable {
 
             private static final int MAX_LIGHT_STATUS_RETRIES = 5;
             private @NonNull ScanListener listener;
-            private @NonNull HashMap<Integer, OpenWebNetDevice> devices;
+            private @NonNull ConcurrentHashMap<Integer, OpenWebNetDevice> devices;
 
             public OneShotScan(@NonNull ScanListener listener) {
                 this.listener = listener;
-                devices = new HashMap<Integer, OpenWebNetDevice>();
+                devices = new ConcurrentHashMap<Integer, OpenWebNetDevice>();
             }
 
             @Override
@@ -301,6 +302,9 @@ public class OpenWebNetGateway implements ResponseListener, AutoCloseable {
                 } catch (InterruptedException | IOException e) {
                     // we notify that the scan failed
                     logger.warn("exception {} call onScanError() -> {}", e.getLocalizedMessage(), listener);
+                    listener.onScanError();
+                } catch (Exception e) {
+                    logger.warn("exception {}", e.getLocalizedMessage(), listener);
                     listener.onScanError();
                 } finally {
                     internalListener = null;

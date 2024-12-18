@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <thing:thing-descriptions bindingId="openwebnet-legacy"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
-	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
 	<!-- Switch Channel -->
 	<channel-type id="switch">
 		<item-type>Switch</item-type>
 		<label>Switch</label>
-		<description>Switch the power ON and OFF</description>
+		<description>Switch ON/OFF</description>
 		<category>Light</category>
 		<tags>
 			<tag>Lighting</tag>
@@ -17,8 +17,7 @@
 	<channel-type id="brightness">
 		<item-type>Dimmer</item-type>
 		<label>Brightness</label>
-		<description>The brightness channel allows to control the brightness of a light. It is also possible to switch the
-			light on and off.</description>
+		<description>Controls the brightness of a light. It is also possible to switch the light on and off.</description>
 		<category>Light</category>
 		<tags>
 			<tag>Lighting</tag>
@@ -28,6 +27,7 @@
 	<channel-type id="shutter">
 		<item-type>Rollershutter</item-type>
 		<label>Roller shutter</label>
+		<description>Control the openness of the rollershutter.</description>
 		<category>Blinds</category>
 	</channel-type>
 </thing:thing-descriptions>
